@@ -18,7 +18,7 @@ app.use(express.static('public'));
 
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://workpavitrajethva:Broadway9007@clusterform.bycftdy.mongodb.net/registrationDB?retryWrites=true&w=majority&appName=ClusterForm', {
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
