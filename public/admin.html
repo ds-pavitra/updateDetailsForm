@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - Registration Data</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .modal-img {
+      max-width: 100%;
+      max-height: 400px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .photo-thumbnail{
+        width: 120px !important;
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="h3">Registration Data Management</h1>
+      <div>
+        <button id="exportExcel" class="btn btn-success me-2">
+          <i class="bi bi-file-earmark-excel"></i> Export to Excel
+        </button>
+        <button id="downloadPhotos" class="btn btn-primary">
+          <i class="bi bi-download"></i> Download All Photos
+        </button>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search by name, email, or profession...">
+      </div>
+      <div class="col-md-3">
+        <select id="professionFilter" class="form-select">
+          <option value="">All Professions</option>
+          <option value="student">Student</option>
+          <option value="employee">Employee</option>
+          <option value="business">Business</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table id="registrationsTable" class="table table-striped table-hover align-middle">
+        <thead class="table-dark" id="tableHead">
+          <!-- Dynamic headers will be generated here -->
+        </thead>
+        <tbody id="tableBody">
+          <tr>
+            <td colspan="7" class="text-center">Loading data...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Photo Modal -->
+  <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-3">
+        <div class="modal-header">
+          <h5 class="modal-title" id="photoModalLabel">Photo Preview</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img id="enlargedPhoto" src="" alt="Enlarged photo" class="modal-img mb-2">
+          <div id="modalCaption" class="text-muted small"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Details Modal -->
+  <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content p-4">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detailsModalLabel">Registration Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="detailsContent">
+          <!-- Dynamic content goes here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="admin-script.js"></script>
+</body>
+</html>
