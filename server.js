@@ -30,7 +30,11 @@ const db = new Pool({
 const createTable = async () => {
     try {
         await db.query(`
+<<<<<<< HEAD
             CREATE TABLE IF NOT EXISTS registrations (
+=======
+            CREATE TABLE registrations (
+>>>>>>> 84b0c36 (bugfixes)
                 "id" SERIAL PRIMARY KEY,
                 "firstName" TEXT,
                 "middleName" TEXT,
