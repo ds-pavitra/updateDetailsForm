@@ -30,15 +30,11 @@ const db = new Pool({
 const createTable = async () => {
     try {
         await db.query(`
-<<<<<<< HEAD
             CREATE TABLE IF NOT EXISTS registrations (
-=======
-            CREATE TABLE registrations (
->>>>>>> 84b0c36 (bugfixes)
                 "id" SERIAL PRIMARY KEY,
-                "firstName" TEXT,
-                "middleName" TEXT,
-                "lastName" TEXT,
+                "first_name" TEXT,
+                "middle_name" TEXT,
+                "last_name" TEXT,
                 "mobile" TEXT,
                 "email" TEXT,
                 "dob" DATE,
@@ -47,13 +43,13 @@ const createTable = async () => {
                 "whoareyou" TEXT,
                 "degree" TEXT,
                 "institution" TEXT,
-                "empDegree" TEXT,
+                "emp_degree" TEXT,
                 "profession" TEXT,
                 "company" TEXT,
                 "designation" TEXT,
-                "busDegree" TEXT,
-                "businessType" TEXT,
-                "businessName" TEXT,
+                "bus_degree" TEXT,
+                "business_type" TEXT,
+                "business_name" TEXT,
                 "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         `);
@@ -93,9 +89,9 @@ app.post('/api/register', upload.single('photo'), async (req, res) => {
 
         const query = `
                 INSERT INTO registrations (
-                firstname, middlename, lastname, mobile, email, dob, address, photo, whoareyou,
-                degree, institution, empdegree, profession, company, designation,
-                busdegree, businesstype, businessname
+                first_name, middle_name, last_name, mobile, email, dob, address, photo, whoareyou,
+                degree, institution, emp_degree, profession, company, designation,
+                bus_degree, business_type, business_name
                 ) VALUES (
                 $1, $2, $3, $4, $5, $6, $7, $8, $9,
                 $10, $11, $12, $13, $14, $15,
@@ -104,11 +100,11 @@ app.post('/api/register', upload.single('photo'), async (req, res) => {
             `;
 
         const values = [
-            data.firstName, data.middleName, data.lastName, data.mobile, data.email, data.dob,
+            data.first_name, data.middle_name, data.last_name, data.mobile, data.email, data.dob,
             data.address, photoPath, data.whoareyou,
-            data.degree, data.institution, data.empDegree, data.profession,
+            data.degree, data.institution, data.emp_degree, data.profession,
             data.company, data.designation,
-            data.busDegree, data.businessType, data.businessName
+            data.bus_degree, data.business_type, data.business_name
         ];
 
         await db.query(query, values);
@@ -139,9 +135,9 @@ app.get('/api/export-excel', async (req, res) => {
         const worksheet = workbook.addWorksheet('Registrations');
 
         worksheet.columns = [
-            { header: 'First Name', key: 'firstName', width: 15 },
-            { header: 'Middle Name', key: 'middleName', width: 15 },
-            { header: 'Last Name', key: 'lastName', width: 15 },
+            { header: 'First Name', key: 'first_name', width: 15 },
+            { header: 'Middle Name', key: 'middle_name', width: 15 },
+            { header: 'Last Name', key: 'last_name', width: 15 },
             { header: 'Mobile', key: 'mobile', width: 15 },
             { header: 'Email', key: 'email', width: 25 },
             { header: 'DOB', key: 'dob', width: 15 },
@@ -155,9 +151,9 @@ app.get('/api/export-excel', async (req, res) => {
             if (reg.whoareyou === 'student') {
                 details = `Degree: ${reg.degree || '-'}, Institution: ${reg.institution || '-'}`;
             } else if (reg.whoareyou === 'employee') {
-                details = `Degree: ${reg.empDegree || '-'}, Profession: ${reg.profession || '-'}, Company: ${reg.company || '-'}, Designation: ${reg.designation || '-'}`;
+                details = `Degree: ${reg.emp_degree || '-'}, Profession: ${reg.profession || '-'}, Company: ${reg.company || '-'}, Designation: ${reg.designation || '-'}`;
             } else if (reg.whoareyou === 'business') {
-                details = `Degree: ${reg.busDegree || '-'}, Business Type: ${reg.businessType || '-'}, Business Name: ${reg.businessName || '-'}`;
+                details = `Degree: ${reg.bus_degree || '-'}, Business Type: ${reg.business_type || '-'}, Business Name: ${reg.business_name || '-'}`;
             }
 
             worksheet.addRow({
@@ -194,7 +190,7 @@ app.get('/api/download-photos', async (req, res) => {
         rows.forEach(reg => {
             if (reg.photo && fs.existsSync(reg.photo)) {
                 const fileName = path.basename(reg.photo);
-                archive.file(reg.photo, { name: `${reg.firstName}-${reg.lastName}-${fileName}` });
+                archive.file(reg.photo, { name: `${reg.first_name}-${reg.last_name}-${fileName}` });
             }
         });
 

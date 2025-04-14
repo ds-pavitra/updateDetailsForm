@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     const img = document.createElement('img');
                     img.src = `/${filePath}`;
-                    img.alt = `${reg.firstName} ${reg.lastName}`;
+                    img.alt = `${reg.first_name} ${reg.last_name}`;
                     img.className = 'photo-thumbnail';
 
                     photoLink.appendChild(img);
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const filteredData = allRegistrations.filter(reg => {
             const matchSearch =
-                `${reg.firstName} ${reg.middleName || ''} ${reg.lastName}`.toLowerCase().includes(searchTerm) ||
+                `${reg.first_name} ${reg.middle_name || ''} ${reg.last_name}`.toLowerCase().includes(searchTerm) ||
                 reg.email.toLowerCase().includes(searchTerm) ||
                 reg.whoareyou.toLowerCase().includes(searchTerm);
 
