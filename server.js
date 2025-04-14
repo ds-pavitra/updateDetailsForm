@@ -52,7 +52,7 @@ const createTable = async () => {
                 "bus_degree" TEXT,
                 "business_type" TEXT,
                 "business_name" TEXT,
-                "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         `);
         console.log('✅ PostgreSQL table ready');
@@ -120,7 +120,7 @@ app.post('/api/register', upload.single('photo'), async (req, res) => {
 // 📌 API: Fetch all registrations
 app.get('/api/registrations', async (req, res) => {
     try {
-        const result = await db.query('SELECT * FROM registrations ORDER BY createdAt DESC');
+        const result = await db.query('SELECT * FROM registrations ORDER BY created_at DESC');
         res.json(result.rows);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching registrations', error: error.message });
@@ -130,7 +130,7 @@ app.get('/api/registrations', async (req, res) => {
 // 📌 API: Export to Excel
 app.get('/api/export-excel', async (req, res) => {
     try {
-        const result = await db.query('SELECT * FROM registrations ORDER BY createdAt DESC');
+        const result = await db.query('SELECT * FROM registrations ORDER BY created_at DESC');
         const rows = result.rows;
 
         const workbook = new ExcelJS.Workbook();

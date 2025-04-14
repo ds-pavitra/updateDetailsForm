@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     photoLink.appendChild(img);
                     td.appendChild(photoLink);
-                } else if (key === 'dob' || key === 'createdAt') {
+                } else if (key === 'dob' || key === 'created_at') {
                     td.textContent = value ? new Date(value).toLocaleDateString() : '-';
                 } else {
                     td.textContent = value && value !== '' ? value : '-';
