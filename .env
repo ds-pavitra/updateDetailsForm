@@ -1,0 +1,4 @@
+DB_HOST=your-database-host
+DB_USER=your-database-username
+DB_PASSWORD=your-database-password
+DB_NAME=your-database-name
