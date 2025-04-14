@@ -30,7 +30,7 @@ const db = new Pool({
 const createTable = async () => {
     try {
         await db.query(`
-            CREATE TABLE registrations (
+            CREATE TABLE IF NOT EXISTS registrations (
                 "id" SERIAL PRIMARY KEY,
                 "firstName" TEXT,
                 "middleName" TEXT,
@@ -88,16 +88,17 @@ app.post('/api/register', upload.single('photo'), async (req, res) => {
         const data = req.body;
 
         const query = `
-            INSERT INTO registrations (
-                firstName, middleName, lastName, mobile, email, dob, address, photo, whoareyou,
-                degree, institution, empDegree, profession, company, designation,
-                busDegree, businessType, businessName
-            ) VALUES (
+                INSERT INTO registrations (
+                firstname, middlename, lastname, mobile, email, dob, address, photo, whoareyou,
+                degree, institution, empdegree, profession, company, designation,
+                busdegree, businesstype, businessname
+                ) VALUES (
                 $1, $2, $3, $4, $5, $6, $7, $8, $9,
                 $10, $11, $12, $13, $14, $15,
                 $16, $17, $18
-            )
-        `;
+                )
+            `;
+
         const values = [
             data.firstName, data.middleName, data.lastName, data.mobile, data.email, data.dob,
             data.address, photoPath, data.whoareyou,
