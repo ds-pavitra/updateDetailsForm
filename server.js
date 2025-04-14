@@ -30,28 +30,28 @@ const db = new Pool({
 const createTable = async () => {
     try {
         await db.query(`
-            CREATE TABLE IF NOT EXISTS registrations (
-    "id" SERIAL PRIMARY KEY,
-    "firstName" TEXT,
-    "middleName" TEXT,
-    "lastName" TEXT,
-    "mobile" TEXT,
-    "email" TEXT,
-    "dob" DATE,
-    "address" TEXT,
-    "photo" TEXT,
-    "whoareyou" TEXT,
-    "degree" TEXT,
-    "institution" TEXT,
-    "empDegree" TEXT,
-    "profession" TEXT,
-    "company" TEXT,
-    "designation" TEXT,
-    "busDegree" TEXT,
-    "businessType" TEXT,
-    "businessName" TEXT,
-    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+            CREATE TABLE registrations (
+                "id" SERIAL PRIMARY KEY,
+                "firstName" TEXT,
+                "middleName" TEXT,
+                "lastName" TEXT,
+                "mobile" TEXT,
+                "email" TEXT,
+                "dob" DATE,
+                "address" TEXT,
+                "photo" TEXT,
+                "whoareyou" TEXT,
+                "degree" TEXT,
+                "institution" TEXT,
+                "empDegree" TEXT,
+                "profession" TEXT,
+                "company" TEXT,
+                "designation" TEXT,
+                "busDegree" TEXT,
+                "businessType" TEXT,
+                "businessName" TEXT,
+                "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
         `);
         console.log('✅ PostgreSQL table ready');
     } catch (err) {
@@ -150,9 +150,9 @@ app.get('/api/export-excel', async (req, res) => {
             if (reg.whoareyou === 'student') {
                 details = `Degree: ${reg.degree || '-'}, Institution: ${reg.institution || '-'}`;
             } else if (reg.whoareyou === 'employee') {
-                details = `Degree: ${reg.empdegree || '-'}, Profession: ${reg.profession || '-'}, Company: ${reg.company || '-'}, Designation: ${reg.designation || '-'}`;
+                details = `Degree: ${reg.empDegree || '-'}, Profession: ${reg.profession || '-'}, Company: ${reg.company || '-'}, Designation: ${reg.designation || '-'}`;
             } else if (reg.whoareyou === 'business') {
-                details = `Degree: ${reg.busdegree || '-'}, Business Type: ${reg.businesstype || '-'}, Business Name: ${reg.businessname || '-'}`;
+                details = `Degree: ${reg.busDegree || '-'}, Business Type: ${reg.businessType || '-'}, Business Name: ${reg.businessName || '-'}`;
             }
 
             worksheet.addRow({
@@ -189,7 +189,7 @@ app.get('/api/download-photos', async (req, res) => {
         rows.forEach(reg => {
             if (reg.photo && fs.existsSync(reg.photo)) {
                 const fileName = path.basename(reg.photo);
-                archive.file(reg.photo, { name: `${reg.firstname}-${reg.lastname}-${fileName}` });
+                archive.file(reg.photo, { name: `${reg.firstName}-${reg.lastName}-${fileName}` });
             }
         });
 
