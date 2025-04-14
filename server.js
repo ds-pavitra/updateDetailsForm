@@ -30,7 +30,9 @@ const db = new Pool({
 const createTable = async () => {
     try {
         await db.query(`
-            CREATE TABLE IF NOT EXISTS registrations (
+            DROP TABLE IF EXISTS registrations;
+
+            CREATE TABLE registrations (
                 "id" SERIAL PRIMARY KEY,
                 "first_name" TEXT,
                 "middle_name" TEXT,
