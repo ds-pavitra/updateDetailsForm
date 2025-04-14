@@ -31,27 +31,27 @@ const createTable = async () => {
     try {
         await db.query(`
             CREATE TABLE IF NOT EXISTS registrations (
-                id SERIAL PRIMARY KEY,
-                firstName TEXT,
-                middleName TEXT,
-                lastName TEXT,
-                mobile TEXT,
-                email TEXT,
-                dob DATE,
-                address TEXT,
-                photo TEXT,
-                whoareyou TEXT,
-                degree TEXT,
-                institution TEXT,
-                empDegree TEXT,
-                profession TEXT,
-                company TEXT,
-                designation TEXT,
-                busDegree TEXT,
-                businessType TEXT,
-                businessName TEXT,
-                createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
+    "id" SERIAL PRIMARY KEY,
+    "firstName" TEXT,
+    "middleName" TEXT,
+    "lastName" TEXT,
+    "mobile" TEXT,
+    "email" TEXT,
+    "dob" DATE,
+    "address" TEXT,
+    "photo" TEXT,
+    "whoareyou" TEXT,
+    "degree" TEXT,
+    "institution" TEXT,
+    "empDegree" TEXT,
+    "profession" TEXT,
+    "company" TEXT,
+    "designation" TEXT,
+    "busDegree" TEXT,
+    "businessType" TEXT,
+    "businessName" TEXT,
+    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
         `);
         console.log('✅ PostgreSQL table ready');
     } catch (err) {
