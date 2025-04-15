@@ -68,28 +68,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 let value = reg[key];
 
                 if (key === 'photo') {
-                    let filePath = 'profilePhoto.png'; // default fallback
-
-                    if (value && value.includes('/uploads/')) {
-                        filePath = value.substring(value.indexOf('/uploads/')); // extract from /uploads onward
-                    }
-
-                    const publicPath = `https://updatedetailsform.onrender.com${filePath}`;
-
+                    const filePath = value ? value.replace(/^.*\\uploads\\/, 'uploads/') : 'profilePhoto.png';
                     const photoLink = document.createElement('a');
-                    photoLink.href = publicPath;
+                    photoLink.href = `/${filePath}`;
                     photoLink.target = '_blank';
                     photoLink.rel = 'noopener noreferrer';
 
                     const img = document.createElement('img');
-                    img.src = publicPath;
+                    img.src = `/${filePath}`;
                     img.alt = `${reg.first_name} ${reg.last_name}`;
                     img.className = 'photo-thumbnail';
 
                     photoLink.appendChild(img);
                     td.appendChild(photoLink);
-                }
-                else if (key === 'dob' || key === 'created_at') {
+                } else if (key === 'dob' || key === 'created_at') {
                     td.textContent = value ? new Date(value).toLocaleDateString() : '-';
                 } else {
                     td.textContent = value && value !== '' ? value : '-';
