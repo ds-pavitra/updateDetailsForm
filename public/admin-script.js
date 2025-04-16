@@ -144,4 +144,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     fetchRegistrations();
+
+    document.getElementById('deleteAll').addEventListener('click', () => {
+        if (confirm('Are you sure you want to delete ALL registrations? This action cannot be undone.')) {
+            fetch('/api/clear-registrations', {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message || 'All entries deleted.');
+                    location.reload();
+                })
+                .catch(err => {
+                    alert('Error deleting entries');
+                    console.error(err);
+                });
+        }
+    });
 });

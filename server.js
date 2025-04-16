@@ -81,10 +81,10 @@ const upload = multer({
     }
 });
 
-// 📌 API: Register User
+// Register API
 app.post('/api/register', upload.single('photo'), async (req, res) => {
     try {
-        const photoPath = req.file ? `/uploads/${req.file.filename}` : '';
+        const photoPath = req.file ? `uploads/${req.file.filename}` : '';
         const data = req.body;
 
         const query = `
@@ -115,7 +115,7 @@ app.post('/api/register', upload.single('photo'), async (req, res) => {
     }
 });
 
-// 📌 API: Fetch all registrations
+// Fetch all registrations
 app.get('/api/registrations', async (req, res) => {
     try {
         const result = await db.query('SELECT * FROM registrations ORDER BY created_at DESC');
@@ -125,7 +125,7 @@ app.get('/api/registrations', async (req, res) => {
     }
 });
 
-// 📌 API: Export to Excel
+// Export to Excel
 app.get('/api/export-excel', async (req, res) => {
     try {
         const result = await db.query('SELECT * FROM registrations ORDER BY created_at DESC');
@@ -175,10 +175,9 @@ app.get('/api/export-excel', async (req, res) => {
     }
 });
 
-// 📌 API: Download photos as ZIP
+// Download Photos ZIP
 app.get('/api/download-photos', async (req, res) => {
     try {
-        // Query to get all registrations
         const result = await db.query('SELECT * FROM registrations');
         const rows = result.rows;
 
@@ -188,16 +187,11 @@ app.get('/api/download-photos', async (req, res) => {
         const archive = archiver('zip', { zlib: { level: 9 } });
         archive.pipe(res);
 
-        // Process each registration and check for photo path
         rows.forEach(reg => {
             if (reg.photo) {
-                // Construct the absolute path of the photo inside the 'public/uploads' folder
-                const filePath = path.join(__dirname, 'public', reg.photo);
-
-                // Check if the file exists
+                const filePath = path.join(__dirname, reg.photo);
                 if (fs.existsSync(filePath)) {
-                    const fileName = path.basename(filePath); // Extract the file name
-                    // Add the file to the archive with a custom name
+                    const fileName = path.basename(filePath);
                     archive.file(filePath, { name: `${reg.first_name}-${reg.last_name}-${fileName}` });
                 }
             }
@@ -210,10 +204,21 @@ app.get('/api/download-photos', async (req, res) => {
     }
 });
 
-// Serve uploaded photos
-app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+// Delete all registrations
+app.delete('/api/clear-registrations', async (req, res) => {
+    try {
+        await db.query('DELETE FROM registrations');
+        res.json({ message: 'All registrations cleared' });
+    } catch (error) {
+        console.error('Error clearing registrations:', error);
+        res.status(500).json({ message: 'Failed to clear registrations', error: error.message });
+    }
+});
 
-// Serve frontend
+// Serve uploaded photos if needed
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Frontend routes (optional)
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'public', 'admin.html')));
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
