@@ -84,7 +84,7 @@ const upload = multer({
 // 📌 API: Register User
 app.post('/api/register', upload.single('photo'), async (req, res) => {
     try {
-        const photoPath = req.file ? req.file.path : '';
+        const photoPath = req.file ? `/uploads/${req.file.filename}` : '';
         const data = req.body;
 
         const query = `
