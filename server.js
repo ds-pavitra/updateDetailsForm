@@ -178,6 +178,7 @@ app.get('/api/export-excel', async (req, res) => {
 // 📌 API: Download photos as ZIP
 app.get('/api/download-photos', async (req, res) => {
     try {
+        // Query to get all registrations
         const result = await db.query('SELECT * FROM registrations');
         const rows = result.rows;
 
@@ -187,10 +188,18 @@ app.get('/api/download-photos', async (req, res) => {
         const archive = archiver('zip', { zlib: { level: 9 } });
         archive.pipe(res);
 
+        // Process each registration and check for photo path
         rows.forEach(reg => {
-            if (reg.photo && fs.existsSync(reg.photo)) {
-                const fileName = path.basename(reg.photo);
-                archive.file(reg.photo, { name: `${reg.first_name}-${reg.last_name}-${fileName}` });
+            if (reg.photo) {
+                // Construct the absolute path of the photo inside the 'public/uploads' folder
+                const filePath = path.join(__dirname, 'public', reg.photo);
+
+                // Check if the file exists
+                if (fs.existsSync(filePath)) {
+                    const fileName = path.basename(filePath); // Extract the file name
+                    // Add the file to the archive with a custom name
+                    archive.file(filePath, { name: `${reg.first_name}-${reg.last_name}-${fileName}` });
+                }
             }
         });
 
@@ -202,7 +211,7 @@ app.get('/api/download-photos', async (req, res) => {
 });
 
 // Serve uploaded photos
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 // Serve frontend
 app.use(express.static(path.join(__dirname, 'public')));
