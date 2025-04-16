@@ -68,10 +68,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 let value = reg[key];
 
                 if (key === 'photo') {
-                    const baseUrl = window.location.href;
+                    const baseUrl = 'https://updatedetailsform.onrender.com';
                     // const fullUrl = value ? value : 'profilePhoto.png';
                     // const filePath = `${baseUrl}/${fullUrl}`;
-                    const filePath = value ? `${baseUrl}/${value}` : 'profilePhoto.png';
+                    const filePath = value ? `${baseUrl}${value}` : 'profilePhoto.png';
                     // const filePath = value ? value.replace(/^.*\\uploads\\/, 'uploads/') : 'profilePhoto.png';
                     const photoLink = document.createElement('a');
                     photoLink.href = `/${filePath}`;
