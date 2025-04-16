@@ -74,12 +74,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     const filePath = value ? `${baseUrl}${value}` : 'profilePhoto.png';
                     // const filePath = value ? value.replace(/^.*\\uploads\\/, 'uploads/') : 'profilePhoto.png';
                     const photoLink = document.createElement('a');
-                    photoLink.href = `/${filePath}`;
+                    photoLink.href = `${filePath}`;
                     photoLink.target = '_blank';
                     photoLink.rel = 'noopener noreferrer';
 
                     const img = document.createElement('img');
-                    img.src = `/${filePath}`;
+                    img.src = `${filePath}`;
                     img.alt = `${reg.first_name} ${reg.last_name}`;
                     img.className = 'photo-thumbnail';
 
