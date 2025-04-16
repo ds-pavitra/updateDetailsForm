@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 let value = reg[key];
 
                 if (key === 'photo') {
-                    const baseUrl = 'https://updatedetailsform.onrender.com';
+                    const baseUrl = 'https://updatedetailsform.onrender.com/';
                     // const fullUrl = value ? value : 'profilePhoto.png';
                     // const filePath = `${baseUrl}/${fullUrl}`;
                     const filePath = value ? `${baseUrl}${value}` : 'profilePhoto.png';
